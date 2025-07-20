@@ -6,7 +6,7 @@ LIB=lib$1.a
 NAME=\$(LIB)
 OBJS=$1.o
 
-all: \$(NAME) "$1"_test
+all: \$(NAME) $1_test
 
 \$(NAME): \$(OBJS)
 	ar rcs \$(NAME) \$(OBJS)
@@ -20,6 +20,6 @@ fclean: clean
 re: fclean
 	\$(MAKE)
 
-"$1"_test: "$1"_test.c \$(NAME)
-	cc \$(CFLAGS) -o "$1"_test "$1"_test.c \$(NAME) && ./"$1"_test
+$1_test: $1_test.c \$(NAME)
+	cc \$(CFLAGS) -o $1_test $1_test.c \$(NAME) && ./$1_test
 EOF
