@@ -6,23 +6,20 @@ LIB=lib$1.a
 NAME=\$(LIB)
 OBJS=$1.o
 
-all: \$(NAME) test
-	./test
+all: \$(NAME) "$1"_test
 
-\$(NAME): \$(LIB)
-
-\$(LIB): \$(OBJS)
-	ar rcs \$(LIB) \$(OBJS)
+\$(NAME): \$(OBJS)
+	ar rcs \$(NAME) \$(OBJS)
 
 clean:
-	rm -f \$(OBJS) \$(LIB)
+	rm -f \$(OBJS) \$(NAME)
 
 fclean: clean
-	rm -f \$(NAME) test
+	rm -f \$(NAME) ft_sub_test
 
 re: fclean
 	\$(MAKE)
 
-test: test.c \$(LIB)
-	cc \$(CFLAGS) -o test test.c \$(LIB)
+"$1"_test: "$1"_test.c \$(NAME)
+	cc \$(CFLAGS) -o "$1"_test "$1"_test.c \$(NAME) && ./"$1"_test
 EOF

@@ -5,7 +5,7 @@ if [[ $1 ]]; then
 	mkdir $1
 	cd $1
 	lib $1
-	touch test.c
+	touch "$1"_test.c
 	touch $(basename $PWD).c
 	header $(basename $PWD)
 elif ! [[ -e Makefile ]]; then
