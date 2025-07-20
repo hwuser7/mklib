@@ -1,0 +1,28 @@
+#!/bin/bash
+
+cat <<EOF > Makefile
+CFLAGS=-Werror -Wall -Wextra
+LIB=lib$1.a
+NAME=\$(LIB)
+OBJS=$1.o
+
+all: \$(NAME) test
+	./test
+
+\$(NAME): \$(LIB)
+
+\$(LIB): \$(OBJS)
+	ar rcs \$(LIB) \$(OBJS)
+
+clean:
+	rm -f \$(OBJS) \$(LIB)
+
+fclean: clean
+	rm -f \$(NAME) test
+
+re: fclean
+	\$(MAKE)
+
+test: test.c \$(LIB)
+	cc \$(CFLAGS) -o test test.c \$(LIB)
+EOF

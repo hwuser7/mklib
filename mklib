@@ -1,60 +1,19 @@
 #!/bin/bash
 
-if [[ $1 ]] && [[ -e Makefile ]]; then
-cat <<EOF > Makefile
-CFLAGS=-Werror -Wall -Wextra
-LIB=lib$1.a
-NAME=\$(LIB)
-OBJS=$1.o
-
-all: \$(NAME) test
-	./test
-
-\$(NAME): \$(LIB)
-
-\$(LIB): \$(OBJS)
-	ar rcs \$(LIB) \$(OBJS)
-
-clean:
-	rm -f \$(OBJS) \$(LIB)
-
-fclean: clean
-	rm -f \$(NAME) test
-
-re: fclean
-	\$(MAKE)
-
-test: test.c \$(LIB)
-	cc \$(CFLAGS) -o test test.c \$(LIB)
-EOF
-
+set -e
+if [[ $1 ]]; then
+	mkdir $1
+	cd $1
+	lib $1
+	touch test.c
+	touch $(basename $PWD).c
+	header $(basename $PWD)
+elif ! [[ -e Makefile ]]; then
+	prog
+	touch main.c
+	touch test.c
+	touch $(basename $PWD).c
+	header $(basename $PWD)
 else
-cat <<EOF > Makefile
-CFLAGS=-Werror -Wall -Wextra
-LIB=libprog.a
-NAME=prog
-OBJS=prog.o
-
-all: \$(NAME) test
-	./test
-
-\$(NAME): main.c \$(LIB)
-	cc \$(CFLAGS) -o \$(NAME) main.c \$(LIB)
-
-\$(LIB): \$(OBJS)
-	ar rcs \$(LIB) \$(OBJS)
-
-clean:
-	rm -f \$(OBJS) \$(LIB)
-
-fclean: clean
-	rm -f \$(NAME) test
-
-re: fclean
-	\$(MAKE)
-
-test: test.c \$(LIB)
-	cc \$(CFLAGS) -o test test.c \$(LIB)
-EOF
-
+	echo "Makefile exist"
 fi

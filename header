@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cat <<EOF > $1.h
+#ifndef $(echo $1 | tr a-z A-Z)_H
+# define $(echo $1 | tr a-z A-Z)_H
+
+
+#endif
+EOF
