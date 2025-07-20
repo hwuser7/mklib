@@ -12,7 +12,7 @@ all: \$(NAME) $1_test
 	ar rcs \$(NAME) \$(OBJS)
 
 clean:
-	rm -f \$(OBJS) \$(NAME)
+	rm -f \$(OBJS)
 
 fclean: clean
 	rm -f \$(NAME) ft_sub_test
